@@ -11,6 +11,7 @@ function init() {
 
   let volumeImage = document.querySelector("#volume-controls img:first-of-type");
 
+
   hornSelect.addEventListener("change", function() {
     let selectedHorn = hornSelect.value;
 
@@ -28,19 +29,26 @@ function init() {
 
   volumeControls.addEventListener("input", function() {
     let selectedVolume = volumeControls.value;
+    console.log(selectedVolume);
+    let hornVolume = document.createElement("audio");
+    hornVolume.volume = selectedVolume / 100;
+
 
     if (selectedVolume == 0) {
       volumeImage.src = "assets/icons/volume-level-0.svg";
+      console.log(hornVolume.volume);
     }
     else if (selectedVolume < 33) {
       volumeImage.src = "assets/icons/volume-level-1.svg";
+      console.log(hornVolume.volume);
     }
     else if (selectedVolume < 67) {
       volumeImage.src = "assets/icons/volume-level-2.svg";
-      console.log(volumeImage.src);
+      console.log(hornVolume.volume);
     }
     else {
       volumeImage.src = "assets/icons/volume-level-3.svg";
+      console.log(hornVolume.volume);
     }
 
   });
