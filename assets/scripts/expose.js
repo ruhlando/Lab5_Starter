@@ -1,8 +1,10 @@
 // expose.js
-
 window.addEventListener('DOMContentLoaded', init);
 
 function init() {
+
+  const jsConfetti = new JSConfetti();
+
   let hornSelect = document.getElementById("horn-select");
   let volumeControls = document.getElementById("volume");
 
@@ -25,7 +27,7 @@ function init() {
     } else if (selectedHorn == "car-horn") {
         hornImage.src = "assets/images/car-horn.svg";
         hornSound.src = "assets/audio/car-horn.mp3";
-        
+
     } else if (selectedHorn == "party-horn") {
         hornImage.src = "assets/images/party-horn.svg";
         hornSound.src = "assets/audio/party-horn.mp3";
@@ -50,12 +52,16 @@ function init() {
     }
     else {
       volumeImage.src = "assets/icons/volume-level-3.svg";
-    }
+    };
 
   });
 
   playHorn.addEventListener("click", function(){
     hornSound.play();
+    if (hornSelect.value == "party-horn") {
+      /* alert("confettiiii"); */
+      jsConfetti.addConfetti();
+    };
 
   });
   
