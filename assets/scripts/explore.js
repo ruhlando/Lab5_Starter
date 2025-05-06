@@ -7,6 +7,7 @@ function init() {
 
   const inputTxt = document.getElementById("text-to-speak");
   const voiceSelect = document.getElementById("voice-select");
+  const speakTextButton = document.querySelector("button");
 
   let voices = [];
 
@@ -24,6 +25,7 @@ function init() {
         return +1;
       }
     });
+    
     const selectedIndex =
       voiceSelect.selectedIndex < 0 ? 0 : voiceSelect.selectedIndex;
     voiceSelect.innerHTML = "";
@@ -48,6 +50,44 @@ function init() {
   if (speechSynthesis.onvoiceschanged !== undefined) {
     speechSynthesis.onvoiceschanged = populateVoiceList;
   }
+
+  function speak() {
+    if (synth.speaking) {
+      console.error("speechSynthesis.speaking");
+      return;
+    }
   
+    if (inputTxt.value !== "") {
+      const utterThis = new SpeechSynthesisUtterance(inputTxt.value);
+  
+      utterThis.onend = function (event) {
+        console.log("SpeechSynthesisUtterance.onend");
+      };
+  
+      utterThis.onerror = function (event) {
+        console.error("SpeechSynthesisUtterance.onerror");
+      };
+  
+      const selectedOption =
+        voiceSelect.selectedOptions[0].getAttribute("data-name");
+  
+      for (let i = 0; i < voices.length; i++) {
+        if (voices[i].name === selectedOption) {
+          utterThis.voice = voices[i];
+          break;
+        }
+      }
+      synth.speak(utterThis);
+    }
+  }
+  
+  speakTextButton.onclick = function (event) {
+    event.preventDefault();
+  
+    speak();
+  
+    inputTxt.blur();  
+  }
+
   
 }
