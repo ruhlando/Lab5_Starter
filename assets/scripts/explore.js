@@ -9,6 +9,8 @@ function init() {
   const voiceSelect = document.getElementById("voice-select");
   const speakTextButton = document.querySelector("button");
 
+  const smilingFacePicture = document.querySelector("img");
+
   let voices = [];
 
 
@@ -59,9 +61,13 @@ function init() {
   
     if (inputTxt.value !== "") {
       const utterThis = new SpeechSynthesisUtterance(inputTxt.value);
+      console.log("startedlol");
+      smilingFacePicture.src = "assets/images/smiling-open.png";
   
       utterThis.onend = function (event) {
         console.log("SpeechSynthesisUtterance.onend");
+        smilingFacePicture.src = "assets/images/smiling.png";
+        
       };
   
       utterThis.onerror = function (event) {
